@@ -1,5 +1,6 @@
 import { createSystem, defaultConfig } from "@chakra-ui/react"
 import { buttonRecipe } from "./theme/button.recipe"
+import { animationStyles } from "./theme/animations"
 
 export const system = createSystem(defaultConfig, {
   globalCss: {
@@ -17,10 +18,12 @@ export const system = createSystem(defaultConfig, {
     },
   },
   theme: {
+    animationStyles,
     tokens: {
       colors: {
         ui: {
           main: { value: "#009688" },
+          primary: { value: "#a655f7" },
         },
       },
     },
