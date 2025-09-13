@@ -55,20 +55,27 @@ function Login() {
   }
 
   return (
-    <Center h='100vh' p={0} bgImage={`url(${BgImage})`} bgSize="cover" m={0} maxW="100%" bgRepeat="no-repeat">
-
-      <Box pos='absolute' inset={0} pointerEvents='none'>
+    <Center
+      h="100vh"
+      p={0}
+      bgImage={`url(${BgImage})`}
+      bgSize="cover"
+      m={0}
+      maxW="100%"
+      bgRepeat="no-repeat"
+    >
+      <Box pos="absolute" inset={0} pointerEvents="none">
         {[...Array(20)].map((_, i) => (
           <Box
             key={i}
-            pos='absolute'
+            pos="absolute"
             left={`${Math.random() * 100}%`}
             top={`${Math.random() * 100}%`}
             w={2}
             h={2}
-            bgColor='ui.main/30'
-            rounded='full'
-            animationStyle='float'
+            bgColor="ui.main/30"
+            rounded="full"
+            animationStyle="float"
           />
         ))}
       </Box>
@@ -78,19 +85,37 @@ function Login() {
         as="form"
         onSubmit={handleSubmit(onSubmit)}
         h="fit-content"
-        width={'lg'}
+        width={"lg"}
         alignItems="stretch"
         justifyContent="center"
         gap={4}
       >
-        <Card.Header display='flex' alignItems='center' justifyContent='center' p={0}>
-          <Box mb={4} p={4} rounded='full' bgColor='ui.main/20' backdropBlur='sm' width='max-content'>
-            <Icon width={8} height={8} color='ui.main'>
+        <Card.Header
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          p={0}
+        >
+          <Box
+            mb={4}
+            p={4}
+            rounded="full"
+            bgColor="ui.main/20"
+            backdropBlur="sm"
+            width="max-content"
+          >
+            <Icon width={8} height={8} color="ui.main">
               <LuBot />
             </Icon>
           </Box>
-          <Card.Title><Heading color={"ui.main"} size='3xl'>Roleplay AI</Heading></Card.Title>
-          <Card.Description><Text>Enter the world of limitless possibilities</Text></Card.Description>
+          <Card.Title>
+            <Heading color={"ui.main"} size="3xl">
+              Roleplay AI
+            </Heading>
+          </Card.Title>
+          <Card.Description>
+            <Text>Enter the world of limitless possibilities</Text>
+          </Card.Description>
         </Card.Header>
 
         <Field
@@ -125,6 +150,6 @@ function Login() {
           </RouterLink>
         </Text>
       </Card.Root>
-    </Center >
+    </Center>
   )
 }

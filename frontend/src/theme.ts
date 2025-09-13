@@ -1,6 +1,6 @@
 import { createSystem, defaultConfig } from "@chakra-ui/react"
-import { buttonRecipe } from "./theme/button.recipe"
 import { animationStyles } from "./theme/animations"
+import { buttonRecipe } from "./theme/button.recipe"
 
 export const system = createSystem(defaultConfig, {
   globalCss: {
