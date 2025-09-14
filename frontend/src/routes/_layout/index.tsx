@@ -13,19 +13,19 @@ import {
 } from "@chakra-ui/react"
 import { createFileRoute } from "@tanstack/react-router"
 import { useState } from "react"
-import {
-  FiBook,
-  FiCalendar, FiPlus, FiUser
-} from "react-icons/fi"
+import { FiPlus } from "react-icons/fi"
 import { LuBot } from "react-icons/lu"
 
 import { useColorModeValue } from "@/components/ui/color-mode"
+import { DataCards } from "@/modules/dashboard"
+import { Stories } from "@/types"
 
 export const Route = createFileRoute("/_layout/")({
   component: Dashboard,
 })
 
-const mockStories = [
+
+const mockStories: Stories = [
   {
     id: 1,
     title: "Medieval Fantasy Adventure",
@@ -62,7 +62,6 @@ function Dashboard() {
   const [stories] = useState(mockStories)
 
   const cardBg = useColorModeValue("white", "gray.800")
-  const statsBg = useColorModeValue("gray.50", "gray.700")
 
   const getStatusColor = (status: string) => {
     return status === "Active" ? "green" : "gray"
@@ -79,65 +78,7 @@ function Dashboard() {
 
   return (
     <Container maxW="container.xl" py={8}>
-      <SimpleGrid columns={{ base: 1, md: 3 }} gap={6} mb={8}>
-        <Card.Root bg={statsBg}>
-          <Card.Body>
-            <Flex justify="space-between" align="center">
-              <VStack align="start" gap={1}>
-                <Text fontSize="sm" color="gray.500" fontWeight="medium">
-                  Total Stories
-                </Text>
-                <Text fontSize="2xl" fontWeight="bold">
-                  {stories.length}
-                </Text>
-                <Text fontSize="xs" color="gray.500">
-                  Active adventures
-                </Text>
-              </VStack>
-              <Icon as={FiBook} w={5} h={5} color="gray.500" />
-            </Flex>
-          </Card.Body>
-        </Card.Root>
-
-        <Card.Root bg={statsBg}>
-          <Card.Body>
-            <Flex justify="space-between" align="center">
-              <VStack align="start" gap={1}>
-                <Text fontSize="sm" color="gray.500" fontWeight="medium">
-                  Active Now
-                </Text>
-                <Text fontSize="2xl" fontWeight="bold">
-                  {stories.filter((s) => s.status === "Active").length}
-                </Text>
-                <Text fontSize="xs" color="gray.500">
-                  Active stories
-                </Text>
-              </VStack>
-              <Icon as={FiUser} w={5} h={5} color="gray.500" />
-            </Flex>
-          </Card.Body>
-        </Card.Root>
-
-        <Card.Root bg={statsBg}>
-          <Card.Body>
-            <Flex justify="space-between" align="center">
-              <VStack align="start" gap={1}>
-                <Text fontSize="sm" color="gray.500" fontWeight="medium">
-                  Last Played
-                </Text>
-                <Text fontSize="2xl" fontWeight="bold">
-                  2h
-                </Text>
-                <Text fontSize="xs" color="gray.500">
-                  Hours ago
-                </Text>
-              </VStack>
-              <Icon as={FiCalendar} w={5} h={5} color="gray.500" />
-            </Flex>
-          </Card.Body>
-        </Card.Root>
-      </SimpleGrid>
-
+      <DataCards stories={stories} />
       {/* Stories Section */}
       <Flex justify="space-between" align="center" mb={6}>
         <VStack align="start" gap={1}>
