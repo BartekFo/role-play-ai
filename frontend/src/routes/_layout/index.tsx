@@ -1,7 +1,5 @@
 import {
-  Badge,
-  Box,
-  Button,
+  Badge, Button,
   Card,
   Container,
   Flex,
@@ -11,7 +9,7 @@ import {
   SimpleGrid,
   Stack,
   Text,
-  VStack,
+  VStack
 } from "@chakra-ui/react"
 import { createFileRoute } from "@tanstack/react-router"
 import { useState } from "react"
@@ -80,156 +78,151 @@ function Dashboard() {
   }
 
   return (
-    <Box minH="100vh" bg={useColorModeValue("gray.50", "gray.900")}>
+    <Container maxW="container.xl" py={8}>
+      <SimpleGrid columns={{ base: 1, md: 3 }} gap={6} mb={8}>
+        <Card.Root bg={statsBg}>
+          <Card.Body>
+            <Flex justify="space-between" align="center">
+              <VStack align="start" gap={1}>
+                <Text fontSize="sm" color="gray.500" fontWeight="medium">
+                  Total Stories
+                </Text>
+                <Text fontSize="2xl" fontWeight="bold">
+                  {stories.length}
+                </Text>
+                <Text fontSize="xs" color="gray.500">
+                  Active adventures
+                </Text>
+              </VStack>
+              <Icon as={FiBook} w={5} h={5} color="gray.500" />
+            </Flex>
+          </Card.Body>
+        </Card.Root>
 
-      {/* Main Content */}
-      <Container maxW="container.xl" py={8}>
-        {/* Stats Section */}
-        <SimpleGrid columns={{ base: 1, md: 3 }} gap={6} mb={8}>
-          <Card.Root bg={statsBg}>
-            <Card.Body>
-              <Flex justify="space-between" align="center">
-                <VStack align="start" gap={1}>
-                  <Text fontSize="sm" color="gray.500" fontWeight="medium">
-                    Total Stories
-                  </Text>
-                  <Text fontSize="2xl" fontWeight="bold">
-                    {stories.length}
-                  </Text>
-                  <Text fontSize="xs" color="gray.500">
-                    Active adventures
-                  </Text>
+        <Card.Root bg={statsBg}>
+          <Card.Body>
+            <Flex justify="space-between" align="center">
+              <VStack align="start" gap={1}>
+                <Text fontSize="sm" color="gray.500" fontWeight="medium">
+                  Active Now
+                </Text>
+                <Text fontSize="2xl" fontWeight="bold">
+                  {stories.filter((s) => s.status === "Active").length}
+                </Text>
+                <Text fontSize="xs" color="gray.500">
+                  Active stories
+                </Text>
+              </VStack>
+              <Icon as={FiUser} w={5} h={5} color="gray.500" />
+            </Flex>
+          </Card.Body>
+        </Card.Root>
+
+        <Card.Root bg={statsBg}>
+          <Card.Body>
+            <Flex justify="space-between" align="center">
+              <VStack align="start" gap={1}>
+                <Text fontSize="sm" color="gray.500" fontWeight="medium">
+                  Last Played
+                </Text>
+                <Text fontSize="2xl" fontWeight="bold">
+                  2h
+                </Text>
+                <Text fontSize="xs" color="gray.500">
+                  Hours ago
+                </Text>
+              </VStack>
+              <Icon as={FiCalendar} w={5} h={5} color="gray.500" />
+            </Flex>
+          </Card.Body>
+        </Card.Root>
+      </SimpleGrid>
+
+      {/* Stories Section */}
+      <Flex justify="space-between" align="center" mb={6}>
+        <VStack align="start" gap={1}>
+          <Heading size="lg">Your Roleplay Stories</Heading>
+          <Text color="gray.500">
+            Continue your adventures or start a new one
+          </Text>
+        </VStack>
+
+        <Button colorScheme="blue" size="lg">
+          <FiPlus />
+          Create New Story
+        </Button>
+      </Flex>
+
+      {/* Stories Grid */}
+      <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} gap={6}>
+        {stories.map((story) => (
+          <Card.Root
+            key={story.id}
+            bg={cardBg}
+            shadow="md"
+            _hover={{ shadow: "lg", transform: "translateY(-2px)" }}
+            transition="all 0.2s"
+            cursor="pointer"
+          >
+            <Card.Header pb={3}>
+              <Flex justify="space-between" align="start">
+                <VStack align="start" gap={2} flex={1}>
+                  <Card.Title>{story.title}</Card.Title>
+                  <Card.Description>
+                    {story.description}
+                  </Card.Description>
                 </VStack>
-                <Icon as={FiBook} w={5} h={5} color="gray.500" />
+                <Badge colorScheme={getStatusColor(story.status)} ml={2}>
+                  {story.status}
+                </Badge>
               </Flex>
+            </Card.Header>
+
+            <Card.Body pt={0}>
+              <Stack gap={3}>
+                <Flex justify="space-between" align="center">
+                  <Badge
+                    variant="outline"
+                    colorScheme={getScenarioColor(story.scenario)}
+                  >
+                    {story.scenario}
+                  </Badge>
+                  <Text fontSize="xs" color="gray.500">
+                    {story.lastPlayed}
+                  </Text>
+                </Flex>
+
+                <HStack gap={2} fontSize="sm">
+                  <Icon as={LuBot} w={4} h={4} color="blue.500" />
+                  <Text color="gray.500">Playing as:</Text>
+                  <Text fontWeight="medium">{story.aiCharacter}</Text>
+                </HStack>
+
+                <Button variant="outline" size="sm" w="full" mt={2}>
+                  Continue Story
+                </Button>
+              </Stack>
             </Card.Body>
           </Card.Root>
+        ))}
+      </SimpleGrid>
 
-          <Card.Root bg={statsBg}>
-            <Card.Body>
-              <Flex justify="space-between" align="center">
-                <VStack align="start" gap={1}>
-                  <Text fontSize="sm" color="gray.500" fontWeight="medium">
-                    Active Now
-                  </Text>
-                  <Text fontSize="2xl" fontWeight="bold">
-                    {stories.filter((s) => s.status === "Active").length}
-                  </Text>
-                  <Text fontSize="xs" color="gray.500">
-                    Active stories
-                  </Text>
-                </VStack>
-                <Icon as={FiUser} w={5} h={5} color="gray.500" />
-              </Flex>
-            </Card.Body>
-          </Card.Root>
-
-          <Card.Root bg={statsBg}>
-            <Card.Body>
-              <Flex justify="space-between" align="center">
-                <VStack align="start" gap={1}>
-                  <Text fontSize="sm" color="gray.500" fontWeight="medium">
-                    Last Played
-                  </Text>
-                  <Text fontSize="2xl" fontWeight="bold">
-                    2h
-                  </Text>
-                  <Text fontSize="xs" color="gray.500">
-                    Hours ago
-                  </Text>
-                </VStack>
-                <Icon as={FiCalendar} w={5} h={5} color="gray.500" />
-              </Flex>
-            </Card.Body>
-          </Card.Root>
-        </SimpleGrid>
-
-        {/* Stories Section */}
-        <Flex justify="space-between" align="center" mb={6}>
-          <VStack align="start" gap={1}>
-            <Heading size="lg">Your Roleplay Stories</Heading>
+      {/* Empty State */}
+      {stories.length === 0 && (
+        <VStack gap={6} py={12} textAlign="center">
+          <Icon as={LuBot} w={16} h={16} color="gray.400" />
+          <VStack gap={2}>
+            <Heading size="md">No stories yet</Heading>
             <Text color="gray.500">
-              Continue your adventures or start a new one
+              Create your first AI roleplay adventure to get started
             </Text>
           </VStack>
-
           <Button colorScheme="blue" size="lg">
             <FiPlus />
-            Create New Story
+            Create Your First Story
           </Button>
-        </Flex>
-
-        {/* Stories Grid */}
-        <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} gap={6}>
-          {stories.map((story) => (
-            <Card.Root
-              key={story.id}
-              bg={cardBg}
-              shadow="md"
-              _hover={{ shadow: "lg", transform: "translateY(-2px)" }}
-              transition="all 0.2s"
-              cursor="pointer"
-            >
-              <Card.Header pb={3}>
-                <Flex justify="space-between" align="start">
-                  <VStack align="start" gap={2} flex={1}>
-                    <Card.Title>{story.title}</Card.Title>
-                    <Card.Description>
-                      {story.description}
-                    </Card.Description>
-                  </VStack>
-                  <Badge colorScheme={getStatusColor(story.status)} ml={2}>
-                    {story.status}
-                  </Badge>
-                </Flex>
-              </Card.Header>
-
-              <Card.Body pt={0}>
-                <Stack gap={3}>
-                  <Flex justify="space-between" align="center">
-                    <Badge
-                      variant="outline"
-                      colorScheme={getScenarioColor(story.scenario)}
-                    >
-                      {story.scenario}
-                    </Badge>
-                    <Text fontSize="xs" color="gray.500">
-                      {story.lastPlayed}
-                    </Text>
-                  </Flex>
-
-                  <HStack gap={2} fontSize="sm">
-                    <Icon as={LuBot} w={4} h={4} color="blue.500" />
-                    <Text color="gray.500">Playing as:</Text>
-                    <Text fontWeight="medium">{story.aiCharacter}</Text>
-                  </HStack>
-
-                  <Button variant="outline" size="sm" w="full" mt={2}>
-                    Continue Story
-                  </Button>
-                </Stack>
-              </Card.Body>
-            </Card.Root>
-          ))}
-        </SimpleGrid>
-
-        {/* Empty State */}
-        {stories.length === 0 && (
-          <VStack gap={6} py={12} textAlign="center">
-            <Icon as={LuBot} w={16} h={16} color="gray.400" />
-            <VStack gap={2}>
-              <Heading size="md">No stories yet</Heading>
-              <Text color="gray.500">
-                Create your first AI roleplay adventure to get started
-              </Text>
-            </VStack>
-            <Button colorScheme="blue" size="lg">
-              <FiPlus />
-              Create Your First Story
-            </Button>
-          </VStack>
-        )}
-      </Container>
-    </Box>
+        </VStack>
+      )}
+    </Container>
   )
 }

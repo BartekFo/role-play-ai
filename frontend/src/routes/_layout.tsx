@@ -20,7 +20,7 @@ function Layout() {
     <Flex direction="column" h="100vh">
       <Navbar />
       <Flex flex="1" overflow="hidden">
-        <Flex flex="1" direction="column" p={4} overflowY="auto">
+        <Flex flex="1" direction="column" p={4} overflowY="auto" bgGradient='to-br' gradientFrom={'bg'} gradientVia={'bg'} gradientTo={'ui.primary/5'}>
           <Outlet />
         </Flex>
       </Flex>
