@@ -1,24 +1,16 @@
 import {
-  Badge, Button,
-  Card,
-  Container,
+  Button, Container,
   Flex,
-  Heading,
-  HStack,
-  Icon,
-  SimpleGrid,
-  Stack,
-  Text,
+  Heading, Icon, Text,
   VStack
 } from "@chakra-ui/react"
 import { createFileRoute } from "@tanstack/react-router"
 import { useState } from "react"
-import { FiPlus } from "react-icons/fi"
-import { LuBot } from "react-icons/lu"
+import { LuPlus } from "react-icons/lu"
 
-import { useColorModeValue } from "@/components/ui/color-mode"
 import { DataCards } from "@/modules/dashboard"
 import { Stories } from "@/types"
+import { StoriesCards } from "@/modules/dashboard/components/StoriesCards"
 
 export const Route = createFileRoute("/_layout/")({
   component: Dashboard,
@@ -61,109 +53,26 @@ const mockStories: Stories = [
 function Dashboard() {
   const [stories] = useState(mockStories)
 
-  const cardBg = useColorModeValue("white", "gray.800")
-
-  const getStatusColor = (status: string) => {
-    return status === "Active" ? "green" : "gray"
-  }
-
-  const getScenarioColor = (scenario: string) => {
-    const colors = {
-      Fantasy: "purple",
-      "Sci-Fi": "blue",
-      Mystery: "orange",
-    }
-    return colors[scenario as keyof typeof colors] || "gray"
-  }
 
   return (
     <Container maxW="container.xl" py={8}>
       <DataCards stories={stories} />
-      {/* Stories Section */}
       <Flex justify="space-between" align="center" mb={6}>
         <VStack align="start" gap={1}>
-          <Heading size="lg">Your Roleplay Stories</Heading>
-          <Text color="gray.500">
+          <Heading as='h2' size="2xl">Your Roleplay Stories</Heading>
+          <Text color="ui.mutedForeground">
             Continue your adventures or start a new one
           </Text>
         </VStack>
 
-        <Button colorScheme="blue" size="lg">
-          <FiPlus />
+        <Button color='white' size="lg">
+          <Icon as={LuPlus} w={4} h={4} />
           Create New Story
         </Button>
       </Flex>
 
-      {/* Stories Grid */}
-      <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} gap={6}>
-        {stories.map((story) => (
-          <Card.Root
-            key={story.id}
-            bg={cardBg}
-            shadow="md"
-            _hover={{ shadow: "lg", transform: "translateY(-2px)" }}
-            transition="all 0.2s"
-            cursor="pointer"
-          >
-            <Card.Header pb={3}>
-              <Flex justify="space-between" align="start">
-                <VStack align="start" gap={2} flex={1}>
-                  <Card.Title>{story.title}</Card.Title>
-                  <Card.Description>
-                    {story.description}
-                  </Card.Description>
-                </VStack>
-                <Badge colorScheme={getStatusColor(story.status)} ml={2}>
-                  {story.status}
-                </Badge>
-              </Flex>
-            </Card.Header>
+      <StoriesCards stories={stories} />
 
-            <Card.Body pt={0}>
-              <Stack gap={3}>
-                <Flex justify="space-between" align="center">
-                  <Badge
-                    variant="outline"
-                    colorScheme={getScenarioColor(story.scenario)}
-                  >
-                    {story.scenario}
-                  </Badge>
-                  <Text fontSize="xs" color="gray.500">
-                    {story.lastPlayed}
-                  </Text>
-                </Flex>
-
-                <HStack gap={2} fontSize="sm">
-                  <Icon as={LuBot} w={4} h={4} color="blue.500" />
-                  <Text color="gray.500">Playing as:</Text>
-                  <Text fontWeight="medium">{story.aiCharacter}</Text>
-                </HStack>
-
-                <Button variant="outline" size="sm" w="full" mt={2}>
-                  Continue Story
-                </Button>
-              </Stack>
-            </Card.Body>
-          </Card.Root>
-        ))}
-      </SimpleGrid>
-
-      {/* Empty State */}
-      {stories.length === 0 && (
-        <VStack gap={6} py={12} textAlign="center">
-          <Icon as={LuBot} w={16} h={16} color="gray.400" />
-          <VStack gap={2}>
-            <Heading size="md">No stories yet</Heading>
-            <Text color="gray.500">
-              Create your first AI roleplay adventure to get started
-            </Text>
-          </VStack>
-          <Button colorScheme="blue" size="lg">
-            <FiPlus />
-            Create Your First Story
-          </Button>
-        </VStack>
-      )}
     </Container>
   )
 }
