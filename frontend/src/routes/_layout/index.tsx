@@ -17,15 +17,10 @@ import { createFileRoute } from "@tanstack/react-router"
 import { useState } from "react"
 import {
   FiBook,
-  FiCalendar,
-  FiLogOut,
-  FiPlus,
-  FiSettings,
-  FiUser,
+  FiCalendar, FiPlus, FiUser
 } from "react-icons/fi"
 import { LuBot } from "react-icons/lu"
 
-import useAuth from "@/hooks/useAuth"
 import { useColorModeValue } from "@/components/ui/color-mode"
 
 export const Route = createFileRoute("/_layout/")({
@@ -66,7 +61,6 @@ const mockStories = [
 ]
 
 function Dashboard() {
-  const { user: currentUser, logout } = useAuth()
   const [stories] = useState(mockStories)
 
   const cardBg = useColorModeValue("white", "gray.800")
@@ -87,46 +81,6 @@ function Dashboard() {
 
   return (
     <Box minH="100vh" bg={useColorModeValue("gray.50", "gray.900")}>
-      {/* Header */}
-      <Box
-        bg={cardBg}
-        borderBottomWidth={1}
-        borderColor={useColorModeValue("gray.200", "gray.700")}
-        position="sticky"
-        top={0}
-        zIndex={10}
-      >
-        <Container maxW="container.xl">
-          <Flex justify="space-between" align="center" py={4}>
-            <HStack gap={3}>
-              <Box p={2} bg="blue.100" borderRadius="lg">
-                <Icon as={LuBot} w={6} h={6} color="blue.600" />
-              </Box>
-              <VStack align="start" gap={0}>
-                <Heading size="lg">AI Roleplay Dashboard</Heading>
-                <Text fontSize="sm" color="gray.500">
-                  Welcome back, {currentUser?.full_name || currentUser?.email}!
-                </Text>
-              </VStack>
-            </HStack>
-
-            <HStack gap={2}>
-              <Button variant="ghost" size="sm">
-                <FiSettings />
-                Settings
-              </Button>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={logout}
-              >
-                <FiLogOut />
-                Logout
-              </Button>
-            </HStack>
-          </Flex>
-        </Container>
-      </Box>
 
       {/* Main Content */}
       <Container maxW="container.xl" py={8}>
@@ -219,8 +173,8 @@ function Dashboard() {
               <Card.Header pb={3}>
                 <Flex justify="space-between" align="start">
                   <VStack align="start" gap={2} flex={1}>
-                    <Card.Title noOfLines={2}>{story.title}</Card.Title>
-                    <Card.Description noOfLines={3}>
+                    <Card.Title>{story.title}</Card.Title>
+                    <Card.Description>
                       {story.description}
                     </Card.Description>
                   </VStack>

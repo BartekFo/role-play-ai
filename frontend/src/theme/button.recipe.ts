@@ -4,16 +4,17 @@ export const buttonRecipe = defineRecipe({
   base: {
     fontWeight: "bold",
     display: "flex",
+    borderRadius: "xl",
     alignItems: "center",
     justifyContent: "center",
-    colorPalette: "purple",
+    colorPalette: "primary",
   },
   variants: {
     variant: {
       ghost: {
         bg: "transparent",
         _hover: {
-          bg: "gray.100",
+          bg: "ui.accent",
         },
       },
     },

@@ -80,8 +80,8 @@ function Login() {
         ))}
       </Box>
       <Card.Root
-        bgColor={"bg"}
         p={16}
+        borderColor="border"
         as="form"
         onSubmit={handleSubmit(onSubmit)}
         h="fit-content"

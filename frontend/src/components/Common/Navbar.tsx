@@ -1,31 +1,83 @@
-import { Flex, Image, useBreakpointValue } from "@chakra-ui/react"
+import { Box, Flex, HStack, Icon, VStack, Container, Heading, Text } from "@chakra-ui/react"
+import { Button } from "@/components/ui/button"
+
+
+import { LuBot } from "react-icons/lu"
+import { FiLogOut, FiSettings } from "react-icons/fi"
+import useAuth from "@/hooks/useAuth"
 import { Link } from "@tanstack/react-router"
 
-import Logo from "/assets/images/fastapi-logo.svg"
-import UserMenu from "./UserMenu"
-
 function Navbar() {
-  const display = useBreakpointValue({ base: "none", md: "flex" })
+  const { user: currentUser, logout } = useAuth()
 
   return (
-    <Flex
-      display={display}
-      justify="space-between"
+    <Box
+      as={'header'}
+      bg={'bg.card/50'}
+      borderBottom="1px solid"
+      borderColor="border/50"
       position="sticky"
-      color="white"
-      align="center"
-      bg="bg.muted"
-      w="100%"
+      backdropBlur={'sm'}
       top={0}
-      p={4}
+      zIndex={10}
     >
-      <Link to="/">
-        <Image src={Logo} alt="Logo" maxW="3xs" p={2} />
-      </Link>
-      <Flex gap={2} alignItems="center">
-        <UserMenu />
-      </Flex>
-    </Flex>
+      <Container maxW="container.xl" p={4}>
+        <Flex justify="space-between" align="center">
+          <Link to="/">
+            <HStack gap={3}>
+              <Box
+                p={2}
+                rounded="lg"
+                bgColor="ui.primary/20"
+              >
+                <Icon as={LuBot} width={6} height={6} color="ui.primary" />
+              </Box>
+              <VStack align="start" gap={0}>
+                <Heading as={'h1'} size="xl">AI Roleplay Dashboard</Heading>
+                <Text fontSize="sm" color="ui.mutedForeground">
+                  Welcome back, {currentUser?.full_name || currentUser?.email}!
+                </Text>
+              </VStack>
+            </HStack>
+          </Link>
+
+          <HStack gap={2}>
+            <Link to="/settings">
+              <Button variant="ghost" size="sm">
+                <Icon as={FiSettings} w={4} h={4} mr={2} />
+                Settings
+              </Button>
+            </Link>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={logout}
+            >
+              <Icon as={FiLogOut} w={4} h={4} mr={2} />
+              Logout
+            </Button>
+          </HStack>
+        </Flex>
+      </Container>
+    </Box>
+    // <Flex
+    //   display={display}
+    //   justify="space-between"
+    //   position="sticky"
+    //   color="white"
+    //   align="center"
+    //   bg="bg.muted"
+    //   w="100%"
+    //   top={0}
+    //   p={4}
+    // >
+    //   <Link to="/">
+    //     <Image src={Logo} alt="Logo" maxW="3xs" p={2} />
+    //   </Link>
+    //   <Flex gap={2} alignItems="center">
+    //     <UserMenu />
+    //   </Flex>
+    // </Flex>
   )
 }
 
